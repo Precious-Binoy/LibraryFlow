@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LibraryFlow — Library Management</title><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <a class="brand" href="#dashboard"><span class="brand-mark">L</span><span>library<span class="brand-light">flow</span><small>MANAGEMENT STUDIO</small></span></a>
+    <div class="nav-label">WORKSPACE</div>
+    <button class="nav-item active" data-page="dashboard"><span class="nav-icon">▦</span> Overview</button>
+    <button class="nav-item" data-page="books"><span class="nav-icon">▤</span> Book inventory</button>
+    <button class="nav-item" data-page="loans"><span class="nav-icon">↗</span> Borrow & return</button>
+    <div class="sidebar-bottom"><div class="online-dot"></div><div><b>Local library</b><small>Your data stays on this PC</small></div></div>
+  </aside>
+  <main class="main-area">
+    <header class="topbar"><div class="mobile-brand">LibraryFlow</div><div class="crumb"><span>Workspace</span><span class="slash">/</span><b id="crumb-current">Overview</b></div><div class="top-actions"><span class="live-indicator"><i></i> SYSTEM ONLINE</span><div class="avatar">LB</div></div></header>
+    <section class="page active" id="page-dashboard">
+      <div class="page-heading"><div><div class="eyebrow">TUESDAY · LIBRARY OPERATIONS</div><h1>Your library, <em>in focus.</em></h1><p>Here’s what’s happening with your collection today.</p></div><button class="primary-btn" id="quick-add">＋ Add a book</button></div>
+      <div class="stats-grid">
+        <article class="stat-card stat-dark"><div class="stat-top"><span>BOOK TITLES</span><span class="stat-symbol">▤</span></div><div class="stat-number" id="stat-titles">—</div><div class="stat-foot">Unique titles in collection</div><div class="stat-decoration"></div></article>
+        <article class="stat-card"><div class="stat-top"><span>TOTAL COPIES</span><span class="stat-symbol pale">▣</span></div><div class="stat-number" id="stat-copies">—</div><div class="stat-foot"><span class="tiny-dot teal"></span>Across all titles</div></article>
+        <article class="stat-card"><div class="stat-top"><span>ON LOAN</span><span class="stat-symbol pale">↗</span></div><div class="stat-number" id="stat-borrowed">—</div><div class="stat-foot"><span class="tiny-dot blue"></span>Currently with readers</div></article>
+        <article class="stat-card"><div class="stat-top"><span>OVERDUE</span><span class="stat-symbol pale">◷</span></div><div class="stat-number" id="stat-overdue">—</div><div class="stat-foot"><span class="tiny-dot orange"></span>Needs your attention</div></article>
+      </div>
+      <div class="dashboard-grid">
+        <section class="panel recent-panel"><div class="panel-heading"><div><h2>Recently added</h2><p>Your newest additions to the shelves</p></div><button class="text-btn" data-goto="books">View inventory <span>↗</span></button></div><div id="recent-books" class="recent-list"></div></section>
+        <section class="panel actions-panel"><div class="panel-heading"><div><h2>Quick actions</h2><p>Keep things moving</p></div></div><button class="action-tile" id="action-add"><span class="action-icon purple">＋</span><span><b>Add a new book</b><small>Expand your collection</small></span><span class="action-arrow">↗</span></button><button class="action-tile" id="action-issue"><span class="action-icon mint">↗</span><span><b>Issue a book</b><small>Register a new loan</small></span><span class="action-arrow">↗</span></button><button class="action-tile" data-goto="loans"><span class="action-icon amber">◷</span><span><b>Manage returns</b><small>Review borrowed books</small></span><span class="action-arrow">↗</span></button><div class="tip-box"><span>✦</span><div><b>Little library tip</b><p>Keep ISBN numbers unique to make finding and tracking editions easier.</p></div></div></section>
+      </div>
+      <section class="panel activity-panel"><div class="panel-heading"><div><h2>Circulation snapshot</h2><p>A quick look at active loans</p></div><button class="text-btn" data-goto="loans">All loan records <span>↗</span></button></div><div class="table-wrap"><table><thead><tr><th>BOOK</th><th>BORROWER</th><th>DUE DATE</th><th>STATUS</th><th></th></tr></thead><tbody id="dashboard-loans"></tbody></table></div></section>
+    </section>
+    <section class="page" id="page-books">
+      <div class="page-heading"><div><div class="eyebrow">YOUR COLLECTION</div><h1>Book <em>inventory.</em></h1><p>Every title, organised and easy to find.</p></div><button class="primary-btn" id="add-book-btn">＋ Add a book</button></div>
+      <div class="toolbar"><div class="searchbox"><span>⌕</span><input id="book-search" placeholder="Search title, author, ISBN..." autocomplete="off"></div><select id="category-filter"><option value="">All categories</option></select><select id="availability-filter"><option value="">All availability</option><option value="Available">Available</option><option value="Out of stock">Out of stock</option></select><button class="secondary-btn" id="export-books">↓ Export CSV</button></div>
+      <section class="panel inventory-panel"><div class="panel-heading"><div><h2>All books <span class="count-pill" id="book-count">0</span></h2><p>Manage your library collection</p></div><span class="muted-label">LIVE INVENTORY</span></div><div class="table-wrap"><table><thead><tr><th>BOOK DETAILS</th><th>ISBN</th><th>CATEGORY</th><th>COPIES</th><th>AVAILABILITY</th><th></th></tr></thead><tbody id="books-table"></tbody></table></div><div class="table-footer"><span id="books-footer">Showing 0 titles</span><span>Changes save automatically</span></div></section>
+    </section>
+    <section class="page" id="page-loans">
+      <div class="page-heading"><div><div class="eyebrow">CIRCULATION DESK</div><h1>Borrow & <em>return.</em></h1><p>Track readers, due dates and every book that leaves the shelf.</p></div><button class="primary-btn" id="issue-book-btn">↗ Issue a book</button></div>
+      <div class="loan-summary"><div><span class="summary-icon">↗</span><span><small>ACTIVE LOANS</small><b id="loan-active">0</b></span></div><div><span class="summary-icon orange-bg">◷</span><span><small>OVERDUE RETURNS</small><b id="loan-overdue">0</b></span></div><div><span class="summary-icon green-bg">✓</span><span><small>BOOKS RETURNED</small><b id="loan-returned">0</b></span></div></div>
+      <div class="toolbar loan-toolbar"><div class="searchbox"><span>⌕</span><input id="loan-search" placeholder="Search borrower or book..." autocomplete="off"></div><select id="loan-status-filter"><option value="">All loan statuses</option><option value="Borrowed">Borrowed</option><option value="Overdue">Overdue</option><option value="Returned">Returned</option></select></div>
+      <section class="panel inventory-panel"><div class="panel-heading"><div><h2>Loan register</h2><p>Issue history and return tracking</p></div><span class="muted-label">CIRCULATION LOG</span></div><div class="table-wrap"><table><thead><tr><th>BOOK</th><th>BORROWER</th><th>ISSUED</th><th>DUE DATE</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody id="loans-table"></tbody></table></div><div class="table-footer"><span id="loans-footer">0 loan records</span><span>Due dates are checked automatically</span></div></section>
+    </section>
+    <footer class="footer"><span>LIBRARYFLOW <b>•</b> MADE FOR BETTER READING</span><span>Local-first · Java-powered</span></footer>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+<div class="modal-backdrop" id="modal-backdrop"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-head"><div><div class="eyebrow" id="modal-eyebrow">COLLECTION</div><h2 id="modal-title">Add a book</h2><p id="modal-subtitle">Add a new title to your library.</p></div><button class="close-btn" id="modal-close" aria-label="Close">×</button></div><form id="book-form"><input type="hidden" id="book-id"><div class="form-grid"><label class="wide">Book title <span>*</span><input id="book-title" required maxlength="120" placeholder="e.g. The Midnight Library"></label><label>Author <span>*</span><input id="book-author" required maxlength="100" placeholder="Author name"></label><label>Category <span>*</span><select id="book-category" required><option value="">Choose category</option><option>Fiction</option><option>Technology</option><option>Fantasy</option><option>Self Growth</option><option>Wellness</option><option>Science</option><option>History</option><option>Biography</option><option>Education</option><option>Other</option></select></label><label>ISBN <input id="book-isbn" maxlength="30" placeholder="Optional ISBN"></label><label>Number of copies <span>*</span><input id="book-quantity" type="number" min="1" max="9999" value="1" required></label></div><div class="modal-actions"><button type="button" class="secondary-btn" id="cancel-book">Cancel</button><button type="submit" class="primary-btn" id="save-book">Save book <span>→</span></button></div></form></section></div>
+<div class="modal-backdrop" id="issue-backdrop"><section class="modal"><div class="modal-head"><div><div class="eyebrow">CIRCULATION DESK</div><h2>Issue a <em>book.</em></h2><p>Register the reader and set a return date.</p></div><button class="close-btn" id="issue-close">×</button></div><form id="issue-form"><div class="form-grid"><label class="wide">Select book <span>*</span><select id="issue-book-select" required></select></label><label class="wide">Borrower name <span>*</span><input id="borrower-name" required maxlength="100" placeholder="Full name of reader"></label><label class="wide">Due date <span>*</span><input id="due-date" type="date" required></label></div><div class="modal-actions"><button type="button" class="secondary-btn" id="cancel-issue">Cancel</button><button type="submit" class="primary-btn">Confirm issue <span>→</span></button></div></form></section></div>
+<script src="app.js"></script>
+</body></html>
